@@ -1,5 +1,6 @@
 # dailycovidtracker
 Providing the daily rise in COVID-19 across the Globe.
+
 The data is maintained by Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE)
 
 Tech used: Springboot, Thymeleaf
