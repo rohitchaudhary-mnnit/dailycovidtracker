@@ -8,6 +8,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 
@@ -46,14 +47,20 @@ public class CoronaVirusDataService {
 		for (CSVRecord record : records) {
 			LocationStats locationstat = new LocationStats();
 			
-			locationstat.setState(record.get("Province/State"));
+			String state = record.get("Province/State");
+			if(Objects.isNull(state) || state.length()==0) {
+				locationstat.setState("NA");
+			} else {
+				locationstat.setState(state);
+			}
+			
 			locationstat.setCountry(record.get("Country/Region"));
 			
 			int latestTotalCases = Integer.parseInt(record.get(record.size()-1));
 			int prevDayTotalCases = Integer.parseInt(record.get(record.size()-2));
 		    locationstat.setLatestTotalCases(latestTotalCases);
 		    locationstat.setDiffFromPrevDay(latestTotalCases - prevDayTotalCases);
-		    //System.out.println(locationstat);
+		    System.out.println(locationstat);
 		    
 		    newStats.add(locationstat);
 		}
